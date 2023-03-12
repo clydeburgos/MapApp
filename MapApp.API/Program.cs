@@ -1,5 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
-
+IConfiguration configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
+builder.Services.ConfigureAddressMapServices(configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

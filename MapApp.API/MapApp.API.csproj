@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MapApp.Application.Contracts\MapApp.Application.Contracts.csproj" />
+    <ProjectReference Include="..\MapApp.Application.Infrastructure\MapApp.Infrastructure.csproj" />
     <ProjectReference Include="..\MapApp.Domain\MapApp.Domain.csproj" />
   </ItemGroup>
 
