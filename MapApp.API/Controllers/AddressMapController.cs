@@ -1,7 +1,6 @@
 ﻿using MapApp.Application.Contracts.Persistence.Query;
 using MapApp.Domain.Dto.Request;
-using MapApp.Domain.Dto.Response;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace MapApp.API.Controllers
