@@ -16,10 +16,17 @@ namespace MapApp.Infrastructure.Persistence.Query
         }
         public async Task<IEnumerable<AddressResponseDto>> GetAddressMapQuery(AddressRequestDto requestDto)
         {
+            var param = new DynamicParameters();
             string query = $"SELECT POINT_X AS Longitude, POINT_Y AS Latitude, " +
                 $" STREET_NUM + ' ' + STREET_NAME + ' ' + MUNICIPALITY + ', ' + STATE + ', ' + ZIPCODE AS Title FROM AddressPoints" +
-                $" WITH (NOLOCK) WHERE (POINT_Y BETWEEN @SPOINTY AND @NPOINTY) AND (POINT_X BETWEEN @SPOINTX AND @NPOINTX )";
-            var param = new DynamicParameters();
+                $" WITH (NOLOCK) WHERE ((POINT_Y BETWEEN @SPOINTY AND @NPOINTY) AND (POINT_X BETWEEN @SPOINTX AND @NPOINTX ))";
+
+            if (!string.IsNullOrEmpty(requestDto.Search)) {
+                //for some reason dapper didnt worked with params
+                //so im temporarily using this approach
+                query += $" AND (STREET_NAME LIKE '%{requestDto.Search}%' OR MUNICIPALITY LIKE '%{requestDto.Search}%'" +
+                    $" OR State LIKE '%{requestDto.Search}%' OR ZIPCODE LIKE '%{requestDto.Search}%')";
+            }
             param.Add("@NPOINTX", requestDto.NorthEast.Lng);
             param.Add("@SPOINTX", requestDto.SouthWest.Lng);
 
